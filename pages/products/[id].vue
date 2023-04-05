@@ -2,8 +2,8 @@
   <div>
     
     <Head>
-      <Title>Nuxt Dojo | {{ product.data.title }}</Title>
-      <Meta name="description" :content="product.data.description" />
+      <Title>Nuxt Dojo | {{ product?.data.title }}</Title>
+      <Meta name="description" :content="product?.data.description" />
     </Head>
 
     <ProductDetails :product="product?.data" />
@@ -13,7 +13,7 @@
 <script setup>
 
 const { id } = useRoute().params
-const uri = 'http://45.91.169.26/items/products/' + id
+const uri = 'http://45.91.169.26:8055/items/products/' + id
 
 const { data: product } = await useFetch(uri, { key: id })
 

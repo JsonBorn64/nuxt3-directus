@@ -10,7 +10,7 @@
 
 <script setup>
 
-const { data: products } = await useFetch('http://45.91.169.26/items/products')
+const { data: products } = await useFetch('http://45.91.169.26:8055/items/products')
 
 useHead({
     title: 'Nuxt | Merch',
