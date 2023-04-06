@@ -13,7 +13,7 @@
 <script setup>
 
 const { id } = useRoute().params
-const uri = 'http://45.91.169.26:8055/items/products/' + id
+const uri = 'http://113.30.189.66:8055/items/products/' + id
 
 const { data: product } = await useFetch(uri, { key: id })
 
