@@ -1,13 +1,12 @@
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
     modules: [
         "nuxt-directus",
         '@nuxtjs/tailwindcss',
-        '@nuxtjs/apollo',
+        '@nuxtjs/apollo'
     ],
     directus: {
-        url: "http://localhost:8055",
-    },
+		url: "https://directus.calmdev.site/",
+	},
     app: {
         head: {
             title: 'Nuxt Dojo',
@@ -22,7 +21,7 @@ export default defineNuxtConfig({
     apollo: {
         clients: {
             default: {
-                httpEndpoint: 'http://45.91.169.26/graphql'
+                httpEndpoint: 'http://example.com/graphql'
             }
         },
     },

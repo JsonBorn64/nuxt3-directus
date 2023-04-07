@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     // }
 
     // api call with private key
-    const { data } = await $fetch('https://fakestoreapi.com/products')
+    const { data } = await $fetch(`https://fakestoreapi.com/products`)
 
     return data
 })

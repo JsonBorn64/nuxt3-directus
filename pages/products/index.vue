@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="grid grid-cols-4 gap-5">
-            <div v-for="p in products?.data">
+            <div v-for="p in products">
                 <ProductCard :product="p" />
             </div>
         </div>
@@ -10,7 +10,8 @@
 
 <script setup>
 
-const { data: products } = await useFetch('http://113.30.189.66:8055/items/products')
+const { getItems } = useDirectusItems();
+const products = await getItems({ collection: "products" });
 
 useHead({
     title: 'Nuxt | Merch',
@@ -23,15 +24,6 @@ definePageMeta({
     layout: "products",
 })
 </script>
-
-// const { getItems } = useDirectusItems();
-// const products = await getItems({ collection: "Products" });
-
-// const { data: products } = await useAsyncData(
-//   'products',
-//   () => $fetch('http://localhost:8055/items/Products')
-// )
-// const { data: products } = await useFetch('https://fakestoreapi.com/products')
 
 // const { data } = await useAsyncQuery(gql`
 //     query {

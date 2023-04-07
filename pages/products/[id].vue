@@ -2,24 +2,20 @@
   <div>
     
     <Head>
-      <Title>Nuxt Dojo | {{ product?.data.title }}</Title>
-      <Meta name="description" :content="product?.data.description" />
+      <Title>Nuxt Dojo | {{ product?.title }}</Title>
+      <Meta name="description" :content="product?.description" />
     </Head>
 
-    <ProductDetails :product="product?.data" />
+    <ProductDetails :product="product" />
   </div>
 </template>
 
 <script setup>
+const { getItemById } = useDirectusItems();
+const route = useRoute();
 
-const { id } = useRoute().params
-const uri = 'http://113.30.189.66:8055/items/products/' + id
-
-const { data: product } = await useFetch(uri, { key: id })
-
-// if (!product.value) {
-//   throw createError({ statusCode: 404, statusMessage: 'Product not found' })
-// }
+const product = await getItemById({ collection: "products", id: route.params.id });
+if (!product) showError("No article found, 404");
 
 definePageMeta({
   layout: "products",
