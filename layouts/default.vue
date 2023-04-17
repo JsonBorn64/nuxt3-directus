@@ -4,22 +4,14 @@
     <header class="shadow-sm bg-white">
       <nav class="container mx-auto p-4 flex justify-between">
         <NuxtLink to="/" class="font-bold">Nuxt Dojo</NuxtLink>
-        <p>{{ newUserRes }}</p>
-        <p>{{ email || 'huy' }}</p>
         <ul class="flex gap-4">
-          <li>
-            <NuxtLink to="/">Home</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/about">About</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/doc" target="blank">Doc</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/products" class="btn">Merch</NuxtLink>
-          </li>
+          <li @click="loginUser">login</li>
+          <li><NuxtLink to="/">Home</NuxtLink></li>
+          <li><NuxtLink to="/about">About</NuxtLink></li>
+          <li><NuxtLink to="/doc" target="blank">Doc</NuxtLink></li>
+          <li><NuxtLink to="/products" class="btn">Merch</NuxtLink></li>
           <li><a @click="showAuthPopup = true" class="btn bg-green-800 cursor-pointer">Auth</a></li>
+          <li><a @click="handleLogout" class="btn bg-red-800 cursor-pointer">LogOut</a></li>
         </ul>
       </nav>
     </header>
@@ -62,11 +54,6 @@ const authPassword = ref('');
 const registerName = ref('');
 const registerEmail = ref('');
 const registerPassword = ref('');
-let newUserRes = ref(null);
-
-const user = useDirectusUser();
-
-let email = ref(user.value);
 
 const registerNewUser = () => {
     fetch(`${useDirectusUrl()}users`, {
@@ -75,47 +62,51 @@ const registerNewUser = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "first_name": registerName.value,
-        "email": registerEmail.value,
-        "password": registerPassword.value
+        first_name: registerName.value,
+        email: registerEmail.value,
+        password: registerPassword.value
       })
     }).catch((err) => {
       console.log(err);
     }).then((res) => {
-      newUserRes.value = res.statusText;
       console.log(res);
     })
     showRegistrationPopup.value = false;
 };
 
-const { login } = useDirectusAuth();
+// const { login, logout } = useDirectusAuth();
+
+// const loginUser = async () => {
+//   try {
+//     await login({
+//       email: authEmail.value, password: authPassword.value
+//     });
+//   } catch (e) {
+//     console.log(e.data);
+//   }
+// };
 
 const loginUser = async () => {
-  try {
-    await login({ email: authEmail.value, password: authPassword.value });
-  } catch (e) {
-    console.log(e.data);
-  }
+  fetch(`${useDirectusUrl()}auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: 'lol@mail.com',
+      password: '123456',
+      // email: authEmail.value,
+      // password: authPassword.value,
+      mode: 'cookie'
+    }),
+    credentials: 'include'
+  }).catch((err) => {
+    console.log(err);
+  }).then((res) => {
+    console.log(res);
+    showAuthPopup.value = false;
+  })
 };
-
-// const login = () => {
-//   fetch(`${useDirectusUrl()}auth/login`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       "email": authEmail.value,
-//       "password": authPassword.value
-//     })
-//   }).catch((err) => {
-//     console.log(err);
-//   }).then((res) => {
-//     newUserRes.value = res.statusText;
-//     console.log(res);
-//   })
-//   showAuthPopup.value = false;
-// };
 
 </script>
   

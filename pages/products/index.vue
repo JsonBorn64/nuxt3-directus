@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="grid grid-cols-4 gap-5">
-            <div v-for="p in products">
+            <div v-for="p in products?.data">
                 <ProductCard :product="p" />
             </div>
         </div>
@@ -12,6 +12,8 @@
 
 const { getItems } = useDirectusItems();
 const products = await getItems({ collection: "products" });
+
+// const { data: products } = await useFetch(`${useDirectusUrl()}items/products`)
 
 useHead({
     title: 'Nuxt | Merch',
@@ -25,11 +27,12 @@ definePageMeta({
 })
 </script>
 
-// const { data } = await useAsyncQuery(gql`
+// const { data: products } = await useAsyncQuery(gql`
 //     query {
-//         Products {
+//         products {
 //             id
 //             title
+//             image
 //         }
 //     }
 // `)

@@ -16,6 +16,6 @@
     "sass-loader": "^13.2.2"
   },
   "dependencies": {
-    "nuxt-directus": "^5.1.1"
+    "nuxt-directus": "^5.1.2"
   }
 }

@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     apollo: {
         clients: {
             default: {
-                httpEndpoint: 'http://example.com/graphql'
+                httpEndpoint: 'https://directus.calmdev.site/graphql'
             }
         },
     },
