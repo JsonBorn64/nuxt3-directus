@@ -5,13 +5,20 @@
       <nav class="container mx-auto p-4 flex justify-between">
         <NuxtLink to="/" class="font-bold">Nuxt Dojo</NuxtLink>
         <ul class="flex gap-4">
-          <li @click="loginUser">login</li>
           <li><NuxtLink to="/">Home</NuxtLink></li>
           <li><NuxtLink to="/about">About</NuxtLink></li>
           <li><NuxtLink to="/doc" target="blank">Doc</NuxtLink></li>
-          <li><NuxtLink to="/products" class="btn">Merch</NuxtLink></li>
-          <li><a @click="showAuthPopup = true" class="btn bg-green-800 cursor-pointer">Auth</a></li>
-          <li><a @click="handleLogout" class="btn bg-red-800 cursor-pointer">LogOut</a></li>
+          <li><NuxtLink to="/products">Merch</NuxtLink></li>
+          <li><a
+            @click="showAuthPopup = true"
+            class="btn bg-green-800 cursor-pointer"
+            v-if="!user"
+          >Auth</a></li>
+          <li><a
+            @click="logoutUser"
+            class="btn bg-red-800 cursor-pointer"
+            v-if="user"
+          >LogOut</a></li>
         </ul>
       </nav>
     </header>
@@ -23,8 +30,8 @@
         <div class="overlay" @click="showAuthPopup = false"></div>
         <form @submit.prevent="loginUser">
           <p>Вход</p>
-          <input type="email" placeholder="Email" v-model="authEmail" required>
-          <input type="password" placeholder="Пароль" v-model="authPassword" minlength="6" required>
+          <input type="email" placeholder="Email" v-model="authEmail" >
+          <input type="password" placeholder="Пароль" v-model="authPassword" minlength="6" >
           <button type="submit">Войти</button>
           <a @click="showRegistrationPopup = true, showAuthPopup = false">регистрация</a>
         </form>
@@ -54,59 +61,85 @@ const authPassword = ref('');
 const registerName = ref('');
 const registerEmail = ref('');
 const registerPassword = ref('');
+let user = ref(useDirectusUser().value);
 
-const registerNewUser = () => {
-    fetch(`${useDirectusUrl()}users`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        first_name: registerName.value,
-        email: registerEmail.value,
-        password: registerPassword.value
-      })
-    }).catch((err) => {
-      console.log(err);
-    }).then((res) => {
-      console.log(res);
-    })
-    showRegistrationPopup.value = false;
-};
+const { login, logout, createUser } = useDirectusAuth();
 
-// const { login, logout } = useDirectusAuth();
-
-// const loginUser = async () => {
-//   try {
-//     await login({
-//       email: authEmail.value, password: authPassword.value
-//     });
-//   } catch (e) {
-//     console.log(e.data);
-//   }
+// const registerNewUser = () => {
+//     fetch(`${useDirectusUrl()}users`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//         first_name: registerName.value,
+//         email: registerEmail.value,
+//         password: registerPassword.value,
+//         role: '74b435d0-22ec-452e-af8d-e59672879137',
+//       })
+//     }).catch((err) => {
+//       console.log(err);
+//     }).then((res) => {
+//       console.log(res);
+//     })
+//     showRegistrationPopup.value = false;
 // };
 
+const registerNewUser = async () => {
+  try {
+    await createUser({
+        first_name: registerName.value,
+        email: registerEmail.value,
+        password: registerPassword.value,
+        role: '74b435d0-22ec-452e-af8d-e59672879137',
+      });
+  } catch (e) {
+    console.log(e)
+  }
+};
+
 const loginUser = async () => {
-  fetch(`${useDirectusUrl()}auth/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
+  try {
+    await login({
       email: 'lol@mail.com',
       password: '123456',
-      // email: authEmail.value,
-      // password: authPassword.value,
-      mode: 'cookie'
-    }),
-    credentials: 'include'
-  }).catch((err) => {
-    console.log(err);
-  }).then((res) => {
-    console.log(res);
-    showAuthPopup.value = false;
-  })
+    })
+    window.location.reload();
+  } catch (e) {
+    console.log(e)
+  }
 };
+
+const logoutUser = async () => {
+  try {
+    await logout();
+    window.location.reload();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// const loginUser = async () => {
+//   fetch(`${useDirectusUrl()}auth/login`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       email: 'lol@mail.com',
+//       password: '123456',
+//       // email: authEmail.value,
+//       // password: authPassword.value,
+//       mode: 'cookie'
+//     }),
+//     credentials: 'include'
+//   }).catch((err) => {
+//     console.log(err);
+//   }).then((res) => {
+//     console.log(res);
+//     showAuthPopup.value = false;
+//   })
+// };
 
 </script>
   

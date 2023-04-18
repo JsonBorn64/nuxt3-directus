@@ -2,7 +2,7 @@
     <div class="card">
         <div class="grid grid-cols-2 gap-10">
             <div class="p-7">
-                <img :src="`${useDirectusUrl()}assets/${product?.image}`" class="mx-auto my-7" />
+                <img :src="img(product?.image)" class="mx-auto my-7" />
             </div>
             <div class="p-7">
                 <h2 class="text-4xl my-7">{{ product?.title }}</h2>
@@ -16,6 +16,7 @@
 
 <script setup>
 const { product } = defineProps(['product'])
+const { getThumbnail: img } = useDirectusFiles();
 </script>
 
 <style scoped>

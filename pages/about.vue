@@ -7,9 +7,11 @@
       reprehenderit laboriosam laborum veniam est quo, repellat saepe impedit labore?</p>
   </div>
   <div>{{ data }}</div>
+  <div>{{ user }}</div>
 </template>
 
 <script setup>
+const user = useDirectusUser().value;
 // const { data } = await useFetch('/api/ninja?name=mario')
 // const { data } = await useFetch('/api/ninja?name=mario', {
 //   method: 'post',
