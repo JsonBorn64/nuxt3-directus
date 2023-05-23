@@ -101,8 +101,8 @@ const registerNewUser = async () => {
 const loginUser = async () => {
   try {
     await login({
-      email: 'lol@mail.com',
-      password: '123456',
+      email: authEmail.value,
+      password: authPassword.value,
     })
     window.location.reload();
   } catch (e) {
