@@ -22,10 +22,6 @@ useHead({
     ]
 })
 
-definePageMeta({
-    layout: "products",
-    // middleware: ["auth"]
-})
 </script>
 
 // const { data: products } = await useAsyncQuery(gql`

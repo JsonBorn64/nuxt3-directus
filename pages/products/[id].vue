@@ -19,8 +19,4 @@ const product = await getItemById({ collection: "products", id: route.params.id 
 // const { data: product } = await useFetch(`${useDirectusUrl()}products/${route.params.id}`);
 
 if (!product) showError("No article found, 404");
-
-definePageMeta({
-  layout: "products",
-})
 </script>
