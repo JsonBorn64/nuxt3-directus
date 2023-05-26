@@ -23,13 +23,3 @@ useHead({
 })
 
 </script>
-
-// const { data: products } = await useAsyncQuery(gql`
-//     query {
-//         products {
-//             id
-//             title
-//             image
-//         }
-//     }
-// `)

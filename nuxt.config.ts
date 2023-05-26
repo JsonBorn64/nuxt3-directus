@@ -3,11 +3,10 @@ export default defineNuxtConfig({
         "nuxt-directus",
         '@nuxtjs/tailwindcss',
         '@vite-pwa/nuxt',
-        '@nuxtjs/apollo'
     ],
     directus: {
-		url: "https://directus.calmdev.site/",
-	},
+        url: "https://directus.calmdev.site/",
+    },
     app: {
         head: {
             title: 'Nuxt Dojo',
@@ -19,17 +18,11 @@ export default defineNuxtConfig({
             ]
         }
     },
-    apollo: {
-        clients: {
-            default: {
-                httpEndpoint: 'https://directus.calmdev.site/graphql'
-            }
-        },
-    },
     runtimeConfig: {
         currencyKey: process.env.CURRENCY_API_KEY
     },
     pwa: {
+        registerType: 'autoUpdate',
         manifest: {
             name: 'Nuxt3-Directus',
             short_name: "Nuxt3",
@@ -81,12 +74,18 @@ export default defineNuxtConfig({
             ]
         },
         workbox: {
-            navigateFallback: '/',
-            globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+            navigateFallback: '/',            
+            globPatterns: ['**/*.{js,css,html,json,md,txt,svg,webp,ico,png,jpg}'],
+            globIgnores: ['**/node_modules/**'],
         },
         devOptions: {
-            enabled: true,
+            enabled: false,
             type: 'module'
+        }
+    },
+    nitro: {
+        prerender: {
+            routes: ['/'],
         }
     }
 })
