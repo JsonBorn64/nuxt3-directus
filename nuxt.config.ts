@@ -74,9 +74,24 @@ export default defineNuxtConfig({
             ]
         },
         workbox: {
-            navigateFallback: '/',            
+            navigateFallback: '/',
             globPatterns: ['**/*.{js,css,html,json,md,txt,svg,webp,ico,png,jpg}'],
             globIgnores: ['**/node_modules/**'],
+            runtimeCaching: [
+                {
+                    handler: 'NetworkOnly',
+                    urlPattern: /https:\/\/directus.calmdev.site\/api\/.*\/*.json/,
+                    method: 'GET',
+                    options: {
+                        backgroundSync: {
+                            name: 'myQueueName',
+                            options: {
+                                maxRetentionTime: 24 * 60
+                            }
+                        }
+                    }
+                }
+            ]
         },
         devOptions: {
             enabled: false,
