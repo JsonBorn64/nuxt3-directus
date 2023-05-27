@@ -80,7 +80,7 @@ export default defineNuxtConfig({
             runtimeCaching: [
                 {
                     handler: 'NetworkOnly',
-                    urlPattern: /https:\/\/directus.calmdev.site\/api\/.*\/*.json/,
+                    urlPattern: /\/products/,
                     method: 'GET',
                     options: {
                         backgroundSync: {
