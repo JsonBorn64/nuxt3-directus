@@ -80,7 +80,7 @@ export default defineNuxtConfig({
             runtimeCaching: [
                 {
                     handler: 'NetworkOnly',
-                    urlPattern: /\/products/,
+                    urlPattern: /^https?.*/,
                     method: 'GET',
                     options: {
                         backgroundSync: {
