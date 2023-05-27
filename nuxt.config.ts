@@ -81,7 +81,6 @@ export default defineNuxtConfig({
                 {
                     handler: 'NetworkOnly',
                     urlPattern: /^https?.*/,
-                    method: 'GET',
                     options: {
                         backgroundSync: {
                             name: 'myQueueName',
